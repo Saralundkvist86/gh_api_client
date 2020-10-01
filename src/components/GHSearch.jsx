@@ -1,42 +1,44 @@
-import { render } from '@testing-library/react';
-import React, { Component }from 'react'
-import { Button, Input } from 'semantic-ui-react'
-import { fetchNameRegister } from '../modules/names'
+
+import React, { Component } from "react";
+import { Button, Input } from "semantic-ui-react";
+import { fetchNameRegister } from "../modules/names";
 
 class GHSearch extends Component {
   state = {
-    names: [],
+    items: [],
   };
-  
+
   componentDidMount = async () => {
-    const names = await fetchNameRegister();
-    this.setState({ names: names})
-  }
+    const items = await fetchNameRegister();
+    this.setState({ items: items });
+  };
 
-  render()
- {
+  render() {
     let nameRegister;
-    if (this.state.names !== []) {
-      nameRegister = this.state.names.map(() => {
-        debugger
+    if (this.state.items !== []) {
+      nameRegister = this.state.items.map((item) => {
         return (
-          <>
-         
-          </>
-        )
-      })
-    }
- 
-    
-  return (
-    <>
+        
+        <>
+     <p>{item.login}</p>
+        </>
+      );
+    })
 
-     <Input id="input" type="text" name="search" placeholder="Input GH username"/>
-      <Button name="search">Search</Button> 
-    </>
-  )
+  }
+    return (
+      <>
+        <Input
+          id="input"
+          type="text"
+          name="search"
+          placeholder="Input GH username"
+        />
+        <Button name="search">Search</Button>
+        {nameRegister}
+      </>
+    );
+  }
 }
-}
 
-
-export default GHSearch
+export default GHSearch;
