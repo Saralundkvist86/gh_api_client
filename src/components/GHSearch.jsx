@@ -16,7 +16,7 @@ class GHSearch extends Component {
   render()
  {
     let nameRegister;
-    if (this.state.products !== []) {
+    if (this.state.names !== []) {
       nameRegister = this.state.names.map(() => {
         debugger
         return (
