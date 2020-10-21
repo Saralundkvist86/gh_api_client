@@ -1,41 +1,46 @@
-
+import axios from "axios";
 import React, { Component } from "react";
 import { Button, Input } from "semantic-ui-react";
-import { fetchNameRegister } from "../modules/names";
 
 class GHSearch extends Component {
   state = {
+    search: "",
     items: [],
   };
 
-  componentDidMount = async () => {
-    const items = await fetchNameRegister();
-    this.setState({ items: items });
+  async fetchNameRegister() {
+    const results = await axios.get(
+      `https://api.github.com/search/users?q=${this.state.search}`
+    );
+    this.setState({ items: results.data.items });
+  }
+
+  setSearch = (e) => {
+    this.setState({ search: e.target.value });
   };
 
   render() {
-    let nameRegister;
-    if (this.state.items !== []) {
-      nameRegister = this.state.items.map((item) => {
-        return (
-        
+    let nameRegister = this.state.items.map((item) => {
+      return (
         <>
-     <p>{item.login}</p>
+          <p>{item.login}</p>
         </>
       );
-    })
+    });
 
-  }
     return (
       <>
         <Input
-          id="input"
+          onChange={(e) => this.setSearch(e)}
           type="text"
           name="search"
           placeholder="Input GH username"
+          data-cy="input"
         />
-        <Button name="search">Search</Button>
-        {nameRegister}
+        <Button onClick={this.fetchNameRegister.bind(this)} name="search">
+          Search
+        </Button>
+        <h1 data-cy="search-result">{nameRegister}</h1>
       </>
     );
   }

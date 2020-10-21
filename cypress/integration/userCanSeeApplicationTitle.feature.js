@@ -1,10 +1,9 @@
-describe('Application main view', () => {
+describe("Application main view", () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit("/");
   });
 
-  it('contains titel', () => {
-    cy.get("section[name='title']")
-      .should('contain', 'GitHub Search engine')
+  it("contains titel", () => {
+    cy.get("section[name='title']").should("contain", "GitHub Search engine");
   });
 });
